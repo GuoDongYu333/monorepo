@@ -1,10 +1,12 @@
 {
-  "name": "@monorepo/utils",
+  "name": "@monorepo/css-pre",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
-  "private": true,
   "type": "module",
+  "private":true,
+  "files": [
+    "postCss.ts"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,9 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lodash-es": "^4.17.21"
-  },
-  "devDependencies": {
-    "@types/lodash-es": "^4.17.12"
+    "postcss": "^8.4.47",
+    "postcss-preset-env": "^10.0.8"
   }
 }

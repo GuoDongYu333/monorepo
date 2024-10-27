@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "类库",
   "main": "index.ts",
+  "private": true,
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

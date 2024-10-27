@@ -1,5 +1,7 @@
 packages:
   #存放所有主项目
-  - 'apps/*'
+  - "apps/*"
   #存放公共依赖
-  - 'packages/*'
+  - "packages/*"
+  #存放诸如webpack,vite,eslint，postcss等等的配置
+  - "configs/*"
