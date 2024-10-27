@@ -1,0 +1,5 @@
+packages:
+  #存放所有主项目
+  - 'apps/*'
+  #存放公共依赖
+  - 'packages/*'
