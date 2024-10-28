@@ -15,5 +15,5 @@ export {
   isNumber,
   set as _set,
   get as _get,
-} from "lodash-es";
-export * from "./utlis.ts";
+} from 'lodash-es'
+export * from './utlis.ts'

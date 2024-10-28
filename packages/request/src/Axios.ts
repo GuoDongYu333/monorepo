@@ -4,20 +4,20 @@ import axios, {
   AxiosResponse,
   AxiosRequestConfig,
   AxiosError,
-} from "axios";
-import axiosRetry from "axios-retry";
-import { CreateAxiosOptions } from "./AxiosTransform.ts";
-import { isFunction, cloneDeep } from "@monorepo/utils";
-import { RequestOptions, RequestResult } from "@monorepo/types";
+} from 'axios'
+import axiosRetry from 'axios-retry'
+import { CreateAxiosOptions } from './AxiosTransform.ts'
+import { isFunction, cloneDeep } from '@monorepo/utils'
+import { RequestOptions, RequestResult } from '@monorepo/types'
 
 export class Axios {
-  private axiosInstance: AxiosInstance;
-  private options: CreateAxiosOptions;
+  private axiosInstance: AxiosInstance
+  private options: CreateAxiosOptions
   constructor(options: CreateAxiosOptions) {
-    this.options = options;
-    this.axiosInstance = axios.create(options);
-    axiosRetry(this.axiosInstance);
-    this.setupInterceptors();
+    this.options = options
+    this.axiosInstance = axios.create(options)
+    axiosRetry(this.axiosInstance)
+    this.setupInterceptors()
   }
 
   /**
@@ -25,8 +25,8 @@ export class Axios {
    * @param {CreateAxiosOptions} config 配置对象
    */
   private createAxios(config: CreateAxiosOptions) {
-    this.axiosInstance = axios.create(config);
-    axiosRetry(this.axiosInstance);
+    this.axiosInstance = axios.create(config)
+    axiosRetry(this.axiosInstance)
   }
 
   /**
@@ -34,8 +34,8 @@ export class Axios {
    * @returns {AxiosTransfrom | undefined} 返回包含拦截器钩子的抽象类的对象
    */
   private getTransfrom() {
-    const { transform } = this.options;
-    return transform;
+    const { transform } = this.options
+    return transform
   }
 
   /**
@@ -43,61 +43,61 @@ export class Axios {
    * @returns
    */
   private setupInterceptors() {
-    const transform = this.getTransfrom();
+    const transform = this.getTransfrom()
     if (!transform) {
-      return;
+      return
     }
     const {
       requestInterceptors,
       requestInterceptorsCatch,
       responseInterceptors,
       responseInterceptorsCatch,
-    } = transform;
+    } = transform
 
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         if (requestInterceptors && isFunction(requestInterceptors)) {
-          config = requestInterceptors(config, this.options);
+          config = requestInterceptors(config, this.options)
         }
-        return config;
+        return config
       },
-      undefined
-    );
+      undefined,
+    )
 
-    requestInterceptorsCatch &&
-      isFunction(requestInterceptorsCatch) &&
+    if (requestInterceptorsCatch && isFunction(requestInterceptorsCatch)) {
       this.axiosInstance.interceptors.request.use(
         undefined,
-        requestInterceptorsCatch
-      );
+        requestInterceptorsCatch,
+      )
+    }
 
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
       if (responseInterceptors && isFunction(responseInterceptors)) {
-        res = responseInterceptors(res);
+        res = responseInterceptors(res)
       }
-      return res;
-    }, undefined);
+      return res
+    }, undefined)
 
-    responseInterceptorsCatch &&
-      isFunction(responseInterceptorsCatch) &&
+    if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
       this.axiosInstance.interceptors.response.use(
         undefined,
-        responseInterceptorsCatch
-      );
+        responseInterceptorsCatch,
+      )
+    }
   }
 
   request<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    let conf = cloneDeep(config);
-    const transform = this.getTransfrom();
-    const { requestOptions } = this.options;
-    const opt: RequestOptions = Object.assign({}, requestOptions, options);
+    let conf = cloneDeep(config)
+    const transform = this.getTransfrom()
+    const { requestOptions } = this.options
+    const opt: RequestOptions = Object.assign({}, requestOptions, options)
     const { beforeRequestHook, requestCatchHook, transformRequestHook } =
-      transform || {};
+      transform || {}
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
-      conf = beforeRequestHook(conf, opt);
+      conf = beforeRequestHook(conf, opt)
     }
     return new Promise((resolve, reject) => {
       this.axiosInstance
@@ -105,50 +105,53 @@ export class Axios {
         .then((res: AxiosResponse<RequestResult>) => {
           if (transformRequestHook && isFunction(transformRequestHook)) {
             try {
-              const ret = transformRequestHook(res, opt);
-              resolve(ret);
+              const ret = transformRequestHook(res, opt)
+              resolve(ret)
             } catch (err) {
-              reject(err || new Error("request error!"));
+              reject(err || new Error('request error!'))
             }
-            return;
+            return
           }
-          resolve(res as unknown as Promise<T>);
+          resolve(res as unknown as Promise<T>)
         })
         .catch((e: Error | AxiosError) => {
           if (requestCatchHook && isFunction(requestCatchHook)) {
-            reject(requestCatchHook(e, opt));
-            return;
+            reject(requestCatchHook(e, opt))
+            return
           }
           if (axios.isAxiosError(e)) {
             // rewrite error message from axios in here
           }
-          reject(e);
-        });
-    });
+          reject(e)
+        })
+    })
   }
 
-  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions) {
-    return this.request({ ...config, method: "GET" }, options);
+  get<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions,
+  ): Promise<T> {
+    return this.request({ ...config, method: 'GET' }, options)
   }
 
   post<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "POST" }, options);
+    return this.request({ ...config, method: 'POST' }, options)
   }
 
   put<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "PUT" }, options);
+    return this.request({ ...config, method: 'PUT' }, options)
   }
 
   delete<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "DELETE" }, options);
+    return this.request({ ...config, method: 'DELETE' }, options)
   }
 }
