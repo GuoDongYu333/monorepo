@@ -45,7 +45,7 @@ export function errorTrackerReport(): void {
       }
       lazyReport('error', {
         message: `加载${target.tagName}资源错误`,
-        file: target instanceof HTMLImageElement ? target.src : target.href,
+        file: target instanceof HTMLLinkElement ? target.href : target.src,
         error,
         errorType: 'Resource Error',
       })
