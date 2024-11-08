@@ -55,7 +55,7 @@ export function errorTrackerReport(): void {
 }
 
 /**
- * @description 手动上报错误，可用于阻止冒泡了的元素进行错误上报
+ * @description 手动上报错误
  * @param error
  * @param message
  * @return {never}
