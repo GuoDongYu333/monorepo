@@ -1,5 +1,6 @@
-import { initType, configObject } from '../types'
+import type { initType, configObject } from '../types'
 import { errorTrackerReport } from './common/errorTrackerReport'
+import { autoTrackerReport } from './common/autoTrackerReport'
 
 /**
  *
@@ -25,7 +26,7 @@ export function loadingConfig(options: initType): configObject {
     return config
   }
   if (config.autoTracker) {
-    // autoTrackerReport()
+    autoTrackerReport()
   }
   if (config.errorReport) {
     errorTrackerReport()
@@ -38,5 +39,47 @@ export function loadingConfig(options: initType): configObject {
   return {
     changeConfig,
     getConfig,
+  }
+}
+
+/**
+ * @description 输入dom元素，返回dom元素处于整体的位置
+ * @param {Element} element 需要获取路径的元素
+ * @return {string} 返回元素的路径
+ */
+export function getPath(element: Element) {
+  if (element.id !== '') {
+    return '//*[@id="' + element.id + '"]'
+  }
+  if (element === document.body) {
+    return element.tagName
+  }
+
+  let xId = 0
+  const siblings: NodeListOf<ChildNode> | undefined =
+    element.parentNode?.childNodes
+  if (siblings) {
+    for (let i = 0; i < siblings.length; i++) {
+      const sibling = siblings[i]
+      if (sibling === element) {
+        return (
+          //@ts-ignore
+          getPath(element.parentNode) +
+          '/' +
+          element.tagName +
+          '[' +
+          (xId + 1) +
+          ']'
+        )
+      }
+      if (
+        sibling.nodeType === 1 &&
+        (sibling as Element).tagName === element.tagName
+      ) {
+        xId++
+      }
+    }
+  } else {
+    return ''
   }
 }
