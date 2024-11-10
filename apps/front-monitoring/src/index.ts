@@ -1,4 +1,4 @@
-import { initType } from '../types'
+import type { initType } from '../types'
 import { loadingConfig } from './utils'
 
 /**
