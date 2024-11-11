@@ -35,7 +35,7 @@ export function lazyReport(type: string, params: object) {
     clearTimeout(timer)
     return
   }
-
+  clearTimeout(timer)
   timer = setTimeout(() => {
     report(data)
   }, delay)

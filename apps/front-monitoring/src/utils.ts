@@ -87,3 +87,20 @@ export function getPath(element: Element) {
     return ''
   }
 }
+
+/**
+ * @description 检查元素及其所有父级元素是否有 data-no-report 属性
+ * @param element 当前元素
+ * @returns 是否有 data-no-report 属性
+ */
+export function hasNoReportAttribute(element: Element): boolean {
+  let currentElement: Element | null = element
+  while (currentElement) {
+    if (currentElement.getAttribute('data-no-report')) {
+      return true
+    }
+    currentElement = currentElement.parentElement
+    console.log(currentElement)
+  }
+  return false
+}

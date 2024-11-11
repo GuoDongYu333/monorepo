@@ -1,5 +1,5 @@
 import { lazyReport } from './report'
-import { getPath } from '../utils'
+import { getPath, hasNoReportAttribute } from '../utils'
 
 /**
  * @description dom事件自动上报
@@ -8,9 +8,8 @@ export function autoTrackerReport() {
   document.body.addEventListener('click', function (e) {
     const clickDom = e.target as Element
     const target = clickDom?.getAttribute('data-target')
-    const noReport = clickDom?.getAttribute('data-no-report')
     //如果有不需要自动上报，则直接返回
-    if (noReport) {
+    if (hasNoReportAttribute(clickDom)) {
       return
     }
     if (target) {
