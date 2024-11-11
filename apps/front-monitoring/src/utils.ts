@@ -1,6 +1,10 @@
 import type { initType, configObject } from '../types'
 import { errorTrackerReport } from './common/errorTrackerReport'
 import { autoTrackerReport } from './common/autoTrackerReport'
+import {
+  hashTrackerReport,
+  historyTrackerReport,
+} from './common/pageTrackerReport'
 
 /**
  *
@@ -32,9 +36,9 @@ export function loadingConfig(options: initType): configObject {
     errorTrackerReport()
   }
   if (config.isHash) {
-    // hashTrackerReport()
+    hashTrackerReport()
   } else {
-    // historyTrackerReport()
+    historyTrackerReport()
   }
   return {
     changeConfig,
