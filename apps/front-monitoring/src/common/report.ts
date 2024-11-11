@@ -16,7 +16,7 @@ export function lazyReport(type: string, params: object) {
     appId,
     userId,
     type,
-    ...params,
+    params,
     currentTime: new Date().getTime(),
     currentPage: window.location.href,
     ua: navigator.userAgent,
