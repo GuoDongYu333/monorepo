@@ -41,9 +41,13 @@ export function historyTrackerReport() {
   function listener() {
     const stayTime = getStayTime()
     const curPagePath = window.location.href
-    lazyReport('visit', {
-      stayTime,
-      page: beforePagePath,
+    lazyReport({
+      kind: 'user-behavior-related-events',
+      type: 'historychange',
+      params: {
+        stayTime,
+        page: beforePagePath,
+      },
     })
     beforePagePath = curPagePath
   }
@@ -52,7 +56,6 @@ export function historyTrackerReport() {
     listener()
   })
 
-  // history.replaceState
   window.addEventListener('replaceState', function () {
     listener()
   })
@@ -118,9 +121,13 @@ export function hashTrackerReport() {
   function listener() {
     const stayTime = getStayTime()
     const curPagePath = window.location.href
-    lazyReport('visit', {
-      stayTime,
-      page: beforePagePath,
+    lazyReport({
+      kind: 'user-behavior-related-events',
+      type: 'hashchange',
+      params: {
+        stayTime,
+        page: beforePagePath,
+      },
     })
     beforePagePath = curPagePath
   }

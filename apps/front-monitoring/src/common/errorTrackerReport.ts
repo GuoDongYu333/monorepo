@@ -10,23 +10,29 @@ export function errorTrackerReport(): void {
     if (originErrorHandler) {
       originErrorHandler.call(window, message, source, row, col, error)
     }
-    lazyReport('error', {
-      message,
-      source,
-      row,
-      col,
-      error,
-      errorType: 'JS Error',
+    lazyReport({
+      kind: 'error-related-events',
+      type: 'Js Error',
+      params: {
+        message,
+        source,
+        row,
+        col,
+        error,
+      },
     })
   }
   //监听Promise错误
   window.addEventListener(
     'unhandledrejection',
     (error: PromiseRejectionEvent) => {
-      lazyReport('error', {
-        message: error.reason,
-        error,
-        errorType: 'Promise Error',
+      lazyReport({
+        kind: 'error-related-events',
+        type: 'Promise Error',
+        params: {
+          message: error.reason,
+          error,
+        },
       })
     },
   )
@@ -43,11 +49,15 @@ export function errorTrackerReport(): void {
       if (!isElementTarget) {
         return
       }
-      lazyReport('error', {
-        message: `加载${target.tagName}资源错误`,
-        file: target instanceof HTMLLinkElement ? target.href : target.src,
-        error,
-        errorType: 'Resource Error',
+      lazyReport({
+        kind: 'error-related-events',
+        type: 'Resource Error',
+        params: {
+          message: `加载${target.tagName}资源错误`,
+          file: target instanceof HTMLLinkElement ? target.href : target.src,
+          error,
+          errorType: 'Resource Error',
+        },
       })
     },
     true,
@@ -62,9 +72,12 @@ export function errorTrackerReport(): void {
  *
  */
 export function errorCatcher(error: Error, message: string): void {
-  lazyReport('error', {
-    message,
-    error,
-    errorType: 'Catch Error',
+  lazyReport({
+    kind: 'error-related-events',
+    type: 'Catch Error',
+    params: {
+      message,
+      error,
+    },
   })
 }

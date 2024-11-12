@@ -1,4 +1,5 @@
 import { addCache, getCache, clearCache } from './cache'
+import { reportType } from '../../types/index'
 
 let timer: ReturnType<typeof setTimeout>
 
@@ -8,14 +9,13 @@ let timer: ReturnType<typeof setTimeout>
  * @param params 一系列参数，想传什么传什么
  * @returns
  */
-export function lazyReport(type: string, params: object) {
+export function lazyReport(params: reportType) {
   const appId = (window as any).config.appId
   const userId = (window as any).config.userId
   const delay = (window as any).config.delay
   const reportParams = {
     appId,
     userId,
-    type,
     params,
     currentTime: new Date().getTime(),
     currentPage: window.location.href,
