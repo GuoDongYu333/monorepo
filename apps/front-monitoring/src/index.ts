@@ -1,7 +1,7 @@
 import type { initType } from '../types'
-import { loadingConfig } from './utils'
-import { report } from './common/report'
-import { getCache } from './common/cache'
+import { loadingConfig } from './common/utils/utils'
+import { report } from './common/utils/report'
+import { getCache } from './common/utils/cache'
 
 /**
  *

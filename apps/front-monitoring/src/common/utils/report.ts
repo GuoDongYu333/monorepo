@@ -1,12 +1,11 @@
 import { addCache, getCache, clearCache } from './cache'
-import { reportType } from '../../types/index'
+import type { reportType } from '../../../types/index'
 
 let timer: ReturnType<typeof setTimeout>
 
 /**
  * @description 上报
- * @param type 错误的类型，可以自定义或者传优先级什么的？
- * @param params 一系列参数，想传什么传什么
+ * @param {reportType} params 错误的类型，传入一个kind,一个type，一个params(里面内容自定义)
  * @returns
  */
 export function lazyReport(params: reportType) {

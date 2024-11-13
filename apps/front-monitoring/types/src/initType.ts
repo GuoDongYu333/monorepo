@@ -11,6 +11,12 @@ export interface initType {
   isHash: boolean
   //是否开启错误监控
   errorReport: boolean
+  //是否开启长任务性能监控
+  recordLongTask: boolean
+  //是否开启访问量统计
+  recordVisit: boolean
+  //是否开启网络请求监控
+  recordNetwork: boolean
 }
 
 export interface configObject {
