@@ -17,6 +17,8 @@ export interface initType {
   recordVisit: boolean
   //是否开启网络请求监控
   recordNetwork: boolean
+  //是否开启白屏监控
+  recordBlankScreenClassOrId?: Array<string>
 }
 
 export interface configObject {
