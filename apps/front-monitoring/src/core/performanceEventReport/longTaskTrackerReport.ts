@@ -1,13 +1,31 @@
-// import { lazyReport } from './report'
+import { lazyReport } from '../utils/report'
 
 export function longTaskTrackerReport() {
-  new PerformanceObserver((list: PerformanceObserverEntryList) => {
-    list.getEntries().forEach((entry: PerformanceEntry) => {
-      if (entry.duration > 100) {
-        console.log(entry, list, '这是想看的')
-      }
+  try {
+    new PerformanceObserver((list: PerformanceObserverEntryList) => {
+      list.getEntries().forEach((entry: PerformanceEntry) => {
+        if (entry.duration > 100) {
+          lazyReport({
+            kind: 'performance-related-Events',
+            type: 'longTaskTrackerReport-longTask',
+            params: {
+              entry,
+            },
+          })
+        }
+      })
+    }).observe({
+      entryTypes: ['longtask'],
     })
-  }).observe({
-    entryTypes: ['longtask'],
-  })
+    console.log('longTaskTrackerReport初始化完成')
+  } catch (error) {
+    console.log('longTaskTrackerReport初始化失败')
+    lazyReport({
+      kind: 'self-error',
+      type: 'longTaskTrackerReport-initError',
+      params: {
+        error,
+      },
+    })
+  }
 }
