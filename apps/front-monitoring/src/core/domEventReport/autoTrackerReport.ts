@@ -19,7 +19,7 @@ export function autoTrackerReport() {
         if (target) {
           lazyReport({
             kind: 'user-behavior-related-events',
-            type: userEvent,
+            type: `user-behavior-${event}`,
             params: {
               data: target,
             },
@@ -57,7 +57,7 @@ export function autoTrackerReport() {
 export function trackerReport(acttionType: string, data: object) {
   lazyReport({
     kind: 'user-behavior-related-events',
-    type: acttionType,
+    type: `user-behavior-${acttionType}`,
     params: {
       data,
     },

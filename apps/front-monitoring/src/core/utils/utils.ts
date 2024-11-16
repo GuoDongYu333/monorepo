@@ -1,7 +1,7 @@
 import type { initType, configObject } from '../../../types'
 import { errorTrackerReport } from '../errorEventReport/errorTrackerReport'
 import { autoTrackerReport } from '../domEventReport/autoTrackerReport'
-import { longTaskTrackerReport } from '../performanceEventReport/performanceTrackerReport'
+import { longTaskTrackerReport } from '../performanceEventReport/longTaskTrackerReport'
 import { uvTrackerReport } from '../visitEventReport/visitToUserTrackerReport'
 import {
   xhrRequestTrackerReport,
@@ -11,6 +11,7 @@ import {
   hashTrackerReport,
   historyTrackerReport,
 } from '../changePageEventReport/pageTrackerReport'
+import { performanceTrackerReport } from '../performanceEventReport/performanceTrackerReport'
 import { lazyReport } from './report'
 
 /**
@@ -31,6 +32,7 @@ export function loadingConfig(options: initType): configObject {
       recordLongTask: options.recordLongTask,
       recordVisit: options.recordVisit,
       recordNetwork: options.recordNetwork,
+      recordFirstScreen: options.recordFirstScreen,
     }
 
     ;(window as any).config = config
@@ -60,6 +62,9 @@ export function loadingConfig(options: initType): configObject {
     if (config.recordNetwork) {
       xhrRequestTrackerReport()
       fetchRequestTrackerReport()
+    }
+    if (config.recordFirstScreen) {
+      performanceTrackerReport()
     }
     console.log('loadingConfig初始化成功')
 
