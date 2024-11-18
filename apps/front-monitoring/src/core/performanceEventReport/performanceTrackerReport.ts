@@ -1,4 +1,4 @@
-import { lazyReport } from '../utils/report'
+import { lazyReport } from '../../../utils/report'
 import { waitLoading } from '../utils/utils'
 
 export function performanceTrackerReport() {

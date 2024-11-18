@@ -1,17 +1,17 @@
-import type { initType, configObject } from '../../../types'
-import { errorTrackerReport } from '../errorEventReport/errorTrackerReport'
-import { autoTrackerReport } from '../domEventReport/autoTrackerReport'
-import { longTaskTrackerReport } from '../performanceEventReport/longTaskTrackerReport'
-import { uvTrackerReport } from '../visitEventReport/visitToUserTrackerReport'
+import type { initType, configObject } from '../../types'
+import { errorTrackerReport } from '../../src/core/errorEventReport/errorTrackerReport'
+import { autoTrackerReport } from '../../src/core/domEventReport/autoTrackerReport'
+import { longTaskTrackerReport } from '../../src/core/performanceEventReport/longTaskTrackerReport'
+import { uvTrackerReport } from '../../src/core/visitEventReport/visitToUserTrackerReport'
 import {
   xhrRequestTrackerReport,
   fetchRequestTrackerReport,
-} from '../performanceEventReport/networkRequestTrackerReport'
+} from '../../src/core/performanceEventReport/networkRequestTrackerReport'
 import {
   hashTrackerReport,
   historyTrackerReport,
-} from '../changePageEventReport/pageTrackerReport'
-import { performanceTrackerReport } from '../performanceEventReport/performanceTrackerReport'
+} from '../../src/core/changePageEventReport/pageTrackerReport'
+import { performanceTrackerReport } from '../../src/core/performanceEventReport/performanceTrackerReport'
 import { lazyReport } from './report'
 
 /**

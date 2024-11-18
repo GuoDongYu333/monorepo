@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-import { lazyReport } from '../utils/report'
+import { lazyReport } from '../../../utils/report'
 
 /**
  * @description 用户访问上报（uv）

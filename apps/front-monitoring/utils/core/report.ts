@@ -1,5 +1,5 @@
 import { addCache, getCache, clearCache } from './cache'
-import type { reportType } from '../../../types/index'
+import type { reportType } from '../../types/index'
 
 let timer: ReturnType<typeof setTimeout>
 

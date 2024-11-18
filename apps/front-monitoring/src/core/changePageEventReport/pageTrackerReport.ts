@@ -1,5 +1,5 @@
 import type { historyEventName, hashEventName } from '../../../types/index'
-import { lazyReport } from '../utils/report'
+import { lazyReport } from '../../../utils/core/report'
 /**
  * @description hsitory路由模式下页面切换上报
  */
