@@ -1,4 +1,7 @@
 import type { Callback, baseObj } from '../../types'
+import { setFlag } from './global'
+import { EVENTTYPES } from '../../common'
+import { variableTypeDetection } from './verifyType'
 
 /**
  * @description 监听事件
@@ -79,6 +82,11 @@ export function getYMDHMS(): string {
   return `${year}-${month}-${date}`
 }
 
+/**
+ * @description 获取对象类型
+ * @param target 待校验对象
+ * @returns {string}
+ */
 export function typeofAny(target: any): string {
   return Object.prototype.toString.call(target).slice(8, -1).toLowerCase()
 }
@@ -117,4 +125,48 @@ export function generateUUID(): string {
     },
   )
   return uuid
+}
+
+/**
+ * @description 设置是否开启对应监控
+ * @param silentXhr 是否开启xhr监控
+ * @param silentFetch 是否开启fetch监控
+ * @param silentClick 是否开启点击监控
+ * @param silentHistory 是否开启路由监控
+ * @param silentError 是否开启错误监控
+ * @param silentHashchange 是否开启hashchange监控
+ * @param silentUnhandledrejection 是否开启promise监控
+ * @param silentWhiteScreen 是否开启白屏监控
+ */
+export function setSilentFlag({
+  silentXhr = true,
+  silentFetch = true,
+  silentClick = true,
+  silentHistory = true,
+  silentError = true,
+  silentHashchange = true,
+  silentUnhandledrejection = true,
+  silentWhiteScreen = false,
+}): void {
+  setFlag(EVENTTYPES.XHR, !silentXhr)
+  setFlag(EVENTTYPES.FETCH, !silentFetch)
+  setFlag(EVENTTYPES.CLICK, !silentClick)
+  setFlag(EVENTTYPES.HISTORY, !silentHistory)
+  setFlag(EVENTTYPES.ERROR, !silentError)
+  setFlag(EVENTTYPES.HASHCHANGE, !silentHashchange)
+  setFlag(EVENTTYPES.UNHANDLEDREJECTION, !silentUnhandledrejection)
+  setFlag(EVENTTYPES.WHITESCREEN, !silentWhiteScreen)
+}
+
+/**
+ * @description 截取字符串
+ * @param str 待截取字符串
+ * @param interceptLength 截取长度
+ * @returns {string}
+ */
+export function interceptStr(str: string, interceptLength: number): string {
+  if (variableTypeDetection.isString(str)) {
+    return str.slice(0, interceptLength)
+  }
+  return ''
 }

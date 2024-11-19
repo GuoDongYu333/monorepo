@@ -1,8 +1,7 @@
 import type { initType } from '../types'
-import { loadingConfig } from './core/utils/utils'
-import { report } from './core/utils/report'
-import { getCache } from './core/utils/cache'
-import type { VueInstance } from '../types/index'
+import { loadingConfig, report, getCache } from '../utils'
+import type { VueInstance } from '../types'
+// import { handlerOptions } from './core/core/options'
 
 /**
  *
@@ -14,6 +13,8 @@ function init(options: initType): void {
       `系统缺少关键配置，请配置${!options.appId ? 'appId' : ''},${!options.userId ? 'userId' : ''},${!options.reportUrl ? 'reportUrl' : ''}`,
     )
   }
+
+  // handlerOptions(options)
   loadingConfig(options)
   //避免卸载前缓存数据丢失
   window.addEventListener('unload', () => {
