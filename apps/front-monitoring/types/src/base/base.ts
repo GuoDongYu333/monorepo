@@ -57,3 +57,21 @@ export interface ResourceTarget {
   href?: string
   localName?: string
 }
+
+export interface RouteHistory {
+  from: string
+  to: string
+}
+
+export interface ErrorTarget {
+  target?: {
+    localName?: string
+  }
+  error?: any
+  message?: string
+}
+
+export interface ReplaceHandler {
+  type: EVENTTYPES
+  callback: Callback
+}

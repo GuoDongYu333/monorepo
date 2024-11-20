@@ -178,7 +178,7 @@ export class TransportData {
         data.recordScreenId = _support.recordScreenId
       }
     }
-    const res = await this.beforePost?.(data)
+    const res = await this.beforePost(data)
     if (isBrowserENV && res) {
       const value = this.beacon(reportUrl, res)
       if (!value) {

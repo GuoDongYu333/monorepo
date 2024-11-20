@@ -2,6 +2,7 @@ import type { Callback, baseObj } from '../../types'
 import { setFlag } from './global'
 import { EVENTTYPES } from '../../common'
 import { variableTypeDetection } from './verifyType'
+import { _support } from './global'
 
 /**
  * @description 监听事件
@@ -169,4 +170,76 @@ export function interceptStr(str: string, interceptLength: number): string {
     return str.slice(0, interceptLength)
   }
   return ''
+}
+
+/**
+ * @description 将地址字符串转换成对象，
+ * 输入：'https://xxxx.com/yyyy/zzzz?token=rrr&name=vv'
+ * 输出：{
+ *  "host": "xxxx.com",
+ *  "path": "/yyyy/zzzz",
+ *  "protocol": "https",
+ *  "relative": "/yyyy/zzzz?token=rrr&name=vv"
+ * }
+ * @param url 待转换url
+ * @returns {object} 包含host，path，protocol，relative等属性的对象
+ */
+export function parseUrlToObj(url: string) {
+  if (!url) {
+    return {}
+  }
+  const match = url.match(
+    /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/,
+  )
+  if (!match) {
+    return {}
+  }
+  const query = match[6] || ''
+  const fragment = match[8] || ''
+  return {
+    host: match[4],
+    path: match[5],
+    protocol: match[2],
+    relative: match[5] + query + fragment,
+  }
+}
+
+/**
+ * @description 获取错误id，用于去重
+ * @param input 错误信息
+ * @returns {string} 错误的id
+ */
+export function getErrorUid(input: string): string {
+  return window.btoa(encodeURIComponent(input))
+}
+
+/**
+ * @description 判断是否是重复的错误
+ * @param hash 错误hash值，格式为eventtype+message+filename+columnNumber
+ * @returns {boolean} 是否重复
+ */
+export function hashMapExist(hash: string): boolean {
+  const exist = _support.errorMap.has(hash)
+  if (!exist) {
+    _support.errorMap.set(hash, true)
+  }
+  return exist
+}
+
+/**
+ * @description 返回包含id、class、innerTextde字符串的标签
+ * @param target html节点
+ * @returns {string} 包含id、class、innerTextde字符串的标签
+ */
+export function htmlElementAsString(target: HTMLElement): string {
+  const tagName = target.tagName.toLowerCase()
+  if (tagName === 'body') {
+    return ''
+  }
+  let classNames = target.classList.value
+
+  classNames = classNames !== '' ? ` class='${classNames}'` : ''
+  const id = target.id ? ` id="${target.id}"` : ''
+  const innerText = target.innerText
+  return `<${tagName}${id}${classNames !== '' ? classNames : ''}>${innerText}</${tagName}>`
 }
