@@ -1,4 +1,4 @@
-import { lazyReport } from '../../../utils/report'
+import { lazyReport } from '../../../utils'
 
 /**
  * @description 监听错误，自动上报

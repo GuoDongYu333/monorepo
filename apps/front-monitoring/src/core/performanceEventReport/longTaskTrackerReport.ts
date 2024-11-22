@@ -1,4 +1,4 @@
-import { lazyReport } from '../../../utils/report'
+import { lazyReport } from '../../../utils'
 
 export function longTaskTrackerReport() {
   try {

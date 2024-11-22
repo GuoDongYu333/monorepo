@@ -1,12 +1,12 @@
 import { UAParser } from 'ua-parser-js'
-import { webTracker, Window } from '../../types/index'
+import { webTracker, Window } from '../../types'
 import { variableTypeDetection } from './verifyType'
 
 /**
  * @description 获取全局对象
  */
-export function getWindow(): Window {
-  return window as unknown as Window
+export function getWindow(): Window & typeof globalThis {
+  return window as unknown as Window & typeof globalThis
 }
 
 /**
@@ -45,6 +45,14 @@ export function setFlag(replaceType: string, flag: boolean) {
   replaceFlag[replaceType] = flag
 }
 
+/**
+ * @description 获取全局替换标识
+ * @param replaceType
+ */
+export function getFlag(replaceType: string) {
+  return replaceFlag[replaceType] ? true : false
+}
+
 _support.deviceInfo = {
   browserVersion: uaResult.browser.version, // // 浏览器版本号 107.0.0.0
   browser: uaResult.browser.name, // 浏览器类型 Chrome
@@ -53,6 +61,16 @@ _support.deviceInfo = {
   ua: uaResult.ua,
   device: uaResult.device.model ? uaResult.device.model : 'Unknow',
   device_type: uaResult.device.type ? uaResult.device.type : 'Pc',
+}
+
+export function supportsHistory(): boolean {
+  const chrome = _global.chrome
+  const isChromePackagedApp = chrome && chrome.app && chrome.app.runtime
+  const hasHistoryApi =
+    'history' in _global &&
+    !!(_global.history as History).pushState &&
+    !!(_global.history as History).replaceState
+  return !isChromePackagedApp && hasHistoryApi
 }
 
 export { _global, _support }

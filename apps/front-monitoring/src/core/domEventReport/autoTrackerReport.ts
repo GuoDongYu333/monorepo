@@ -1,5 +1,5 @@
-import { lazyReport } from '../../../utils/report'
-import { getPath, hasNoReportAttribute } from '../utils/utils'
+import { lazyReport } from '../../../utils'
+import { getPath, hasNoReportAttribute } from '../../../utils'
 import { autoTrackerReportType } from './autoTrackerReportType'
 
 /**

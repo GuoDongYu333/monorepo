@@ -25,3 +25,15 @@ export enum SpanStatus {
   OutOfRange = 'out_of_range',
   DataLoss = 'data_loss',
 }
+
+export enum HTTPTYPE {
+  XHR = 'xhr',
+  FETCH = 'fetch',
+}
+
+export enum EMethods {
+  Get = 'GET',
+  Post = 'POST',
+  Put = 'PUT',
+  Delete = 'DELETE',
+}

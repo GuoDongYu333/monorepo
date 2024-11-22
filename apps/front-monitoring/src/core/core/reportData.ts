@@ -8,7 +8,7 @@ import {
 } from '../../../utils'
 import { SDK_VERSION, EVENTTYPES } from '../../../common'
 import { userBehavior } from './userBehavior'
-import { InitOptions } from '../../../types'
+import type { InitOptions } from '../../../types'
 import { options } from './options'
 
 /**
@@ -143,7 +143,9 @@ export class TransportData {
     const requestFunc = () => {
       const img = new Image()
       const spliceStr = url.indexOf('?') === -1 ? '?' : '&'
-      img.src = `${url}${spliceStr}data=${encodeURIComponent(JSON.stringify(data))}`
+      img.src = `${url}${spliceStr}data=${encodeURIComponent(
+        JSON.stringify(data),
+      )}`
     }
     this.queue.addFn(requestFunc)
   }

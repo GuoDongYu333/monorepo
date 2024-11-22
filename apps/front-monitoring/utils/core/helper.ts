@@ -243,3 +243,12 @@ export function htmlElementAsString(target: HTMLElement): string {
   const innerText = target.innerText
   return `<${tagName}${id}${classNames !== '' ? classNames : ''}>${innerText}</${tagName}>`
 }
+
+/**
+ * @description 获取当前页面的url
+ * @returns {string} 当前页面的url
+ */
+export function getLocationHref(): string {
+  if (typeof document === 'undefined' || document.location == null) return ''
+  return document.location.href
+}

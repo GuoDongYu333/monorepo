@@ -1,9 +1,10 @@
 import { EVENTTYPES, STATUS_CODE } from '../../../common'
-import { HttpData, RouteHistory, ErrorTarget } from '../../../types'
+import type { HttpData, RouteHistory, ErrorTarget } from '../../../types'
 import { options } from './options'
 import { httpTransform, resourceTransform } from './transfromData'
 import { userBehavior } from './userBehavior'
 import { transportData } from './reportData'
+import { openWhiteScreen } from './whiteScreen'
 import {
   getTimestamp,
   parseUrlToObj,
@@ -74,41 +75,47 @@ const HandleEvents = {
     })
   },
 
+  //OK
   /**
    * @description 处理promise未处理的异常
    * @param ev 一个类型为PromiseRejectionEvent的对象
    */
   handleUnhandleRejection(ev: PromiseRejectionEvent): void {
-    const stack = ErrorStackParser.parse(ev.reason)[0]
-    const { fileName, lineNumber, columnNumber } = stack
-    const message = ev.reason.message || ev.reason.stack
-    const data = {
-      type: EVENTTYPES.UNHANDLEDREJECTION,
-      status: STATUS_CODE.ERROR,
-      time: getTimestamp(),
-      message,
-      fileName,
-      line: lineNumber,
-      column: columnNumber,
-    }
-    userBehavior.push({
-      type: EVENTTYPES.UNHANDLEDREJECTION,
-      category: userBehavior.getCategory(EVENTTYPES.UNHANDLEDREJECTION),
-      status: STATUS_CODE.ERROR,
-      time: getTimestamp(),
-      data,
-    })
-    const hash = getErrorUid(
-      `${EVENTTYPES.UNHANDLEDREJECTION}-${message}-${fileName}-${columnNumber}`,
-    )
-    if (
-      !options.repeatCodeError ||
-      (options.repeatCodeError && hashMapExist(hash))
-    ) {
-      transportData.send(data)
+    try {
+      const stack = ErrorStackParser.parse(ev.reason)[0]
+      const { fileName, lineNumber, columnNumber } = stack
+      const message = ev.reason.message || ev.reason.stack
+      const data = {
+        type: EVENTTYPES.UNHANDLEDREJECTION,
+        status: STATUS_CODE.ERROR,
+        time: getTimestamp(),
+        message,
+        fileName,
+        line: lineNumber,
+        column: columnNumber,
+      }
+      userBehavior.push({
+        type: EVENTTYPES.UNHANDLEDREJECTION,
+        category: userBehavior.getCategory(EVENTTYPES.UNHANDLEDREJECTION),
+        status: STATUS_CODE.ERROR,
+        time: getTimestamp(),
+        data,
+      })
+      const hash = getErrorUid(
+        `${EVENTTYPES.UNHANDLEDREJECTION}-${message}-${fileName}-${columnNumber}`,
+      )
+      if (
+        !options.repeatCodeError ||
+        (options.repeatCodeError && hashMapExist(hash))
+      ) {
+        transportData.send(data)
+      }
+    } catch (error) {
+      console.log('出错了', error)
     }
   },
 
+  //OK
   /**
    * @description 错误处理，如果是vue则在errorHandler中处理，react则在componentDidCatch中处理，否则window.onerror
    * @param ev 一个类型为ErrorTarget的对象
@@ -166,7 +173,18 @@ const HandleEvents = {
   /**
    * @description 白屏处理
    */
-  handleWhiteScreen(): void {},
+  handleWhiteScreen(): void {
+    openWhiteScreen((res: any) => {
+      if (res.status === 'error') {
+        transportData.send({
+          type: EVENTTYPES.WHITESCREEN,
+          time: getTimestamp(),
+          ...res,
+        })
+      }
+      // 上报白屏检测信息
+    }, options)
+  },
 }
 
 export { HandleEvents }

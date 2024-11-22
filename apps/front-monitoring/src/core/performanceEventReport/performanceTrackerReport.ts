@@ -1,5 +1,5 @@
-import { lazyReport } from '../../../utils/report'
-import { waitLoading } from '../utils/utils'
+import { lazyReport } from '../../../utils'
+import { waitLoading } from '../../../utils'
 
 export function performanceTrackerReport() {
   console.log('进来了111')

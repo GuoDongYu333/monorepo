@@ -1,4 +1,4 @@
-import { lazyReport } from '../../../utils/core/report'
+import { lazyReport } from '../../../utils'
 
 /**
  * @description xhr错误网络请求上报

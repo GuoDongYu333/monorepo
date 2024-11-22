@@ -55,3 +55,10 @@ export function isEmpty(obj: any): boolean {
     obj === undefined
   )
 }
+
+/**
+ * @description 判断对象是否包含某个属性
+ */
+export function isExistProperty(obj: any, key: any): boolean {
+  return Object.prototype.hasOwnProperty.call(obj, key)
+}

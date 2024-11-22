@@ -10,18 +10,16 @@ export interface webTracker {
   }
 }
 
+export interface voidFun {
+  (...args: any[]): void
+}
+
 export interface Callback {
   (...args: any[]): any
 }
 
 export interface baseObj {
   [key: string]: any
-}
-
-export interface Window {
-  __webTracker__: {
-    [key: string]: any
-  }
 }
 
 export interface userBehaviorStackType {
@@ -74,4 +72,23 @@ export interface ErrorTarget {
 export interface ReplaceHandler {
   type: EVENTTYPES
   callback: Callback
+}
+
+export type ReplaceCallback = (...args: any[]) => any
+
+export interface Window {
+  chrome: {
+    app: {
+      [key: string]: any
+    }
+  }
+  history: any
+  addEventListener: any
+  innerWidth: any
+  innerHeight: any
+  onpopstate: any
+  performance: any
+  __webTracker__: {
+    [key: string]: any
+  }
 }
