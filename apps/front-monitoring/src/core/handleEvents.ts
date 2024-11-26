@@ -1,5 +1,5 @@
-import { EVENTTYPES, STATUS_CODE } from '../../../common'
-import type { HttpData, RouteHistory, ErrorTarget } from '../../../types'
+import { EVENTTYPES, STATUS_CODE } from '../../common'
+import type { HttpData, RouteHistory, ErrorTarget } from '../../types'
 import { options } from './options'
 import { httpTransform, resourceTransform } from './transfromData'
 import { userBehavior } from './userBehavior'
@@ -10,7 +10,7 @@ import {
   parseUrlToObj,
   getErrorUid,
   hashMapExist,
-} from '../../../utils'
+} from '../../utils'
 import ErrorStackParser from 'error-stack-parser'
 
 const HandleEvents = {
@@ -106,7 +106,7 @@ const HandleEvents = {
       )
       if (
         !options.repeatCodeError ||
-        (options.repeatCodeError && hashMapExist(hash))
+        (options.repeatCodeError && !hashMapExist(hash))
       ) {
         transportData.send(data)
       }
@@ -146,7 +146,7 @@ const HandleEvents = {
       )
       if (
         !options.repeatCodeError ||
-        (options.repeatCodeError && hashMapExist(hash))
+        (options.repeatCodeError && !hashMapExist(hash))
       ) {
         return transportData.send(errorData)
       }

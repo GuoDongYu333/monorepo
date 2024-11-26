@@ -1,5 +1,5 @@
-import { EVENTTYPES, HTTPTYPE, EMethods } from '../../../common'
-import type { ReplaceHandler, voidFun } from '../../../types'
+import { EVENTTYPES, HTTPTYPE, EMethods } from '../../common'
+import type { ReplaceHandler, voidFun } from '../../types'
 import {
   _global,
   on,
@@ -10,7 +10,8 @@ import {
   isExistProperty,
   getLocationHref,
   supportsHistory,
-} from '../../../utils'
+  isSDKTransportUrl,
+} from '../../utils'
 import { options } from './options'
 import { notify, subscribeEvent } from './subscribe'
 import { transportData } from './reportData'
@@ -112,7 +113,8 @@ function xhrReplace(): void {
         // isSdkTransportUrl 判断当前接口是否为上报的接口
         // isFilterHttpUrl 判断当前接口是否为需要过滤掉的接口
         if (
-          (method === EMethods.Post && transportData.isSdkTransportUrl(url)) ||
+          (method === EMethods.Post &&
+            isSDKTransportUrl(transportData.transportUrl, url)) ||
           isFilterHttpUrl(url)
         )
           return
@@ -175,7 +177,7 @@ function fetchReplace(): void {
             // 同理，进接口进行过滤
             if (
               (method === EMethods.Post &&
-                transportData.isSdkTransportUrl(url)) ||
+                isSDKTransportUrl(transportData.transportUrl, url)) ||
               isFilterHttpUrl(url)
             )
               return
@@ -195,7 +197,7 @@ function fetchReplace(): void {
           const eTime = getTimestamp()
           if (
             (method === EMethods.Post &&
-              transportData.isSDKTransportUrl(url)) ||
+              isSDKTransportUrl(transportData.transportUrl, url)) ||
             isFilterHttpUrl(url)
           )
             return

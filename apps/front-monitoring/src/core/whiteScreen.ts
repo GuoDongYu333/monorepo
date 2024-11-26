@@ -1,6 +1,6 @@
-import { STATUS_CODE } from '../../../common'
-import type { Callback, InitOptions } from '../../../types'
-import { _global, _support } from '../../../utils'
+import { STATUS_CODE } from '../../common'
+import type { Callback, InitOptions } from '../../types'
+import { _global, _support } from '../../utils'
 
 /**
  * @description 检测页面是否白屏

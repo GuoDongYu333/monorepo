@@ -1,7 +1,7 @@
-import type { HttpData, ResourceTarget } from '../../../types'
-import { HTTP_CODE, STATUS_CODE } from '../../../common'
+import type { HttpData, ResourceTarget } from '../../types'
+import { HTTP_CODE, STATUS_CODE } from '../../common'
 import { options } from './options'
-import { fromHttpStatus, getTimestamp, interceptStr } from '../../../utils'
+import { fromHttpStatus, getTimestamp, interceptStr } from '../../utils'
 export function httpTransform(data: HttpData): HttpData {
   let msg: any = ''
   const {

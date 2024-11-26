@@ -1,5 +1,5 @@
-import type { InitOptions } from '../../../types'
-import { _support, setSilentFlag, validateOptions } from '../../../utils'
+import type { InitOptions } from '../../types'
+import { _support, setSilentFlag, validateOptions } from '../../utils'
 import { transportData } from './reportData'
 import { userBehavior } from './userBehavior'
 

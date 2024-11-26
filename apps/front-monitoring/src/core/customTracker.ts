@@ -1,6 +1,6 @@
 import ErrorStackParser from 'error-stack-parser'
-import { EVENTTYPES, STATUS_CODE } from '../../../common'
-import { getTimestamp, isError } from '../../../utils'
+import { EVENTTYPES, STATUS_CODE } from '../../common'
+import { getTimestamp, isError } from '../../utils'
 import { userBehavior } from './userBehavior'
 import { transportData } from './reportData'
 

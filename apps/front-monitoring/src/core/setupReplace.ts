@@ -1,7 +1,7 @@
-import { EVENTTYPES, STATUS_CODE } from '../../../common'
+import { EVENTTYPES, STATUS_CODE } from '../../common'
 import { HandleEvents } from './handleEvents'
 import { addReplaceHandler } from './replace'
-import { htmlElementAsString, getTimestamp } from '../../../utils'
+import { htmlElementAsString, getTimestamp } from '../../utils'
 import { userBehavior } from './userBehavior'
 export function setupReplace() {
   //白屏监测

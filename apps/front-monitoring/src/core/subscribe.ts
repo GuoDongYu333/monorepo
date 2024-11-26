@@ -1,6 +1,6 @@
-import { EVENTTYPES } from '../../../common'
-import { ReplaceCallback, ReplaceHandler } from '../../../types'
-import { getFlag, tryCatch } from '../../../utils'
+import { EVENTTYPES } from '../../common'
+import { ReplaceCallback, ReplaceHandler } from '../../types'
+import { getFlag, tryCatch } from '../../utils'
 
 const handlers: { [key in EVENTTYPES]?: ReplaceCallback[] } = {}
 

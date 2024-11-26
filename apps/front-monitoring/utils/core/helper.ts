@@ -252,3 +252,21 @@ export function getLocationHref(): string {
   if (typeof document === 'undefined' || document.location == null) return ''
   return document.location.href
 }
+
+/**
+ * @description 判断上报地址是否是SDK地址
+ * @param reportUrl SDK上报地址
+ * @param targetUrl 上报地址
+ * @returns {boolean} 是否是SDK上报地址
+ */
+export function isSDKTransportUrl(
+  reportUrl: string,
+  targetUrl: string,
+): boolean {
+  console.log('进来哦')
+  let isSDK = false
+  if (reportUrl && targetUrl.indexOf(reportUrl) !== -1) {
+    isSDK = true
+  }
+  return isSDK
+}

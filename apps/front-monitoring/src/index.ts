@@ -1,38 +1,12 @@
-import {
-  // loadingConfig,
-  // report,
-  // getCache,
-  getFlag,
-  setFlag,
-  _global,
-} from '../utils'
+import { getFlag, setFlag, _global } from '../utils'
 import type { VueInstance, ViewModel, InitOptions } from '../types'
-import { handlerOptions } from './core/core/options'
-import { setupReplace } from './core/core/setupReplace'
+import {
+  handlerOptions,
+  setupReplace,
+  HandleEvents,
+  CustomTracker,
+} from './core'
 import { EVENTTYPES } from '../common'
-import { HandleEvents } from './core/core/handleEvents'
-import { CustomTracker } from './core/core/customTracker'
-
-/**
- *
- * @param options 初始化配置信息，注入监控代码
- */
-// function init(options: initType): void {
-//   if (!options.appId || !options.userId || !options.reportUrl) {
-//     return console.error(
-//       `系统缺少关键配置，请配置${!options.appId ? 'appId' : ''},${!options.userId ? 'userId' : ''},${!options.reportUrl ? 'reportUrl' : ''}`,
-//     )
-//   }
-
-//   // handlerOptions(options)
-
-//   loadingConfig(options)
-//   //避免卸载前缓存数据丢失
-//   window.addEventListener('unload', () => {
-//     const data = getCache()
-//     report(data)
-//   })
-// }
 
 function init(options: InitOptions): void {
   if (!options.apikey || !options.userId || !options.reportUrl) {

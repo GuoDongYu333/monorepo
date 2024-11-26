@@ -5,10 +5,11 @@ import {
   validateOptions,
   generateUUID,
   isBrowserENV,
-} from '../../../utils'
-import { SDK_VERSION, EVENTTYPES } from '../../../common'
+  getLocationHref,
+} from '../../utils'
+import { SDK_VERSION, EVENTTYPES } from '../../common'
 import { userBehavior } from './userBehavior'
-import type { InitOptions } from '../../../types'
+import type { InitOptions } from '../../types'
 import { options } from './options'
 
 /**
@@ -101,6 +102,7 @@ export class TransportData {
       ...data,
       ...this.getAuthInfo(),
       uuid: this.uuid,
+      pageUrl: getLocationHref(),
       deviceInfo: _support.deviceInfo,
     }
     const excludeUserBehavior = [

@@ -1,7 +1,7 @@
-import { EVENTTYPES, USERBEHAVIORSTACKTYPES } from '../../../common'
-import type { userBehaviorStackType, InitOptions } from '../../../types'
-import { _support, getTimestamp } from '../../../utils'
-import { validateOptions } from '../../../utils'
+import { EVENTTYPES, USERBEHAVIORSTACKTYPES } from '../../common'
+import type { userBehaviorStackType, InitOptions } from '../../types'
+import { _support, getTimestamp } from '../../utils'
+import { validateOptions } from '../../utils'
 export class userBehaviorCls {
   maxCount = 20
   beforePushFunc: unknown = null
