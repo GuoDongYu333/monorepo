@@ -92,3 +92,25 @@ export interface Window {
     [key: string]: any
   }
 }
+
+export interface SdkBase {
+  transportData: any // 数据上报
+  userBehavior: any // 用户行为
+  options: any // 公共配置
+  notify: any // 发布消息
+}
+
+export abstract class BasePlugin {
+  public type: string
+  constructor(type: string) {
+    this.type = type
+  }
+  abstract bindOptions(options: object): void
+  abstract core(sdkBase: SdkBase): void
+  abstract transform(data: any): void
+}
+
+export interface RecordScreenOption {
+  recordScreenTypeList: string[]
+  recordScreenTime: number
+}
