@@ -1,10 +1,16 @@
-import { getFlag, setFlag, _global } from '../utils'
+import { getFlag, setFlag, _global, tryCatch } from '../utils'
+import {} from './core'
 import type { VueInstance, ViewModel, InitOptions } from '../types'
 import {
   handlerOptions,
   setupReplace,
   HandleEvents,
   CustomTracker,
+  subscribeEvent,
+  transportData,
+  userBehavior,
+  options,
+  notify,
 } from './core'
 import { EVENTTYPES } from '../common'
 
@@ -37,4 +43,20 @@ function install(Vue: VueInstance, options: InitOptions) {
   init(options)
 }
 
-export default { init, install, CustomTracker }
+function use(plugin: any, option: any) {
+  const instance = new plugin(option)
+  if (
+    !subscribeEvent({
+      callback: (data) => {
+        instance.transform(data)
+      },
+      type: instance.type,
+    })
+  )
+    return
+  tryCatch(() => {
+    instance.core({ transportData, userBehavior, options, notify })
+  })
+}
+
+export default { init, install, CustomTracker, use }
