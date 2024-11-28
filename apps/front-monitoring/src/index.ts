@@ -36,7 +36,6 @@ function install(Vue: VueInstance, options: InitOptions) {
     vm: ViewModel,
     info: string,
   ): void {
-    console.log(err)
     HandleEvents.handleError(err)
     if (handler) handler.apply(null, [err, vm, info])
   }
