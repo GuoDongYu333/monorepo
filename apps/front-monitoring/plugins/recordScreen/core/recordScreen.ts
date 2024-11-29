@@ -1,30 +1,35 @@
 import { record } from 'rrweb'
-import { _support, generateUUID, getTimestamp } from '../../../utils'
-import { EVENTTYPES, STATUS_CODE } from '../../../common'
 import pako from 'pako'
 import { Base64 } from 'js-base64'
+import { getTimestamp, generateUUID, _support } from '../../../utils'
+import { EVENTTYPES, STATUS_CODE } from '../../../common'
 
 export function handleScreen(
   transportData: any,
-  recordScreenTime: number,
+  recordScreentime: number,
 ): void {
+  // events存储录屏信息
   let events: any[] = []
+  // 调用stopFn停止录像
+  // let stopFn = record({
   record({
     emit(event, isCheckout) {
       if (isCheckout) {
+        // 此段时间内发生错误，上报录屏信息
         if (_support.hasError) {
           const recordScreenId = _support.recordScreenId
           _support.recordScreenId = generateUUID()
-          transportData({
+          transportData.send({
             type: EVENTTYPES.RECORDSCREEN,
             recordScreenId,
             time: getTimestamp(),
             status: STATUS_CODE.SUCCESS,
-            events: zip(event),
+            events: zip(events),
           })
           events = []
           _support.hasError = false
         } else {
+          // 不上报，清空录屏
           events = []
           _support.recordScreenId = generateUUID()
         }
@@ -32,11 +37,12 @@ export function handleScreen(
       events.push(event)
     },
     recordCanvas: true,
-    checkoutEveryNms: 1000 * recordScreenTime,
+    // 默认每10s重新制作快照
+    checkoutEveryNms: 1000 * recordScreentime,
   })
 }
-
-export function zip(data: any) {
+// 压缩
+export function zip(data: any): string {
   if (!data) return data
   // 判断数据是否需要转为JSON
   const dataJson =

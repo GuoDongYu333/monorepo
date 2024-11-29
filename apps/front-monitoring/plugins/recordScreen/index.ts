@@ -1,5 +1,6 @@
 import { EVENTTYPES } from '../../common'
-import { BasePlugin, RecordScreenOption, SdkBase } from '../../types'
+import { BasePlugin } from '../../types'
+import { RecordScreenOption, SdkBase } from '../../types'
 import { validateOptions, generateUUID, _support } from '../../utils'
 import { handleScreen } from './core/recordScreen'
 

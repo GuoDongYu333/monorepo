@@ -1,4 +1,4 @@
-import { baseObj } from '../base'
+import type { baseObj } from '../base'
 
 export interface VueInstance {
   [key: string]: any

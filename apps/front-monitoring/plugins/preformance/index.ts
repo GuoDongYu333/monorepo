@@ -9,7 +9,8 @@ declare global {
 }
 
 import { EVENTTYPES, STATUS_CODE } from '../../common'
-import { BasePlugin, SdkBase } from '../../types'
+import type { SdkBase } from '../../types'
+import { BasePlugin } from '../../types'
 import { getTimestamp, on, _global } from '../../utils'
 import { getWebVitals, getResource } from './core/performance'
 

@@ -18,7 +18,7 @@ export const variableTypeDetection = {
   isFunction: isType('Function'),
   isSymbol: isType('Symbol'),
   isUndefined: isType('Undefined'),
-  isWindow: isType('window'),
+  isWindow: isType('Window'),
 }
 
 /**

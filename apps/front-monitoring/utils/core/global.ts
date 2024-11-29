@@ -1,5 +1,5 @@
 import { UAParser } from 'ua-parser-js'
-import { webTracker, Window } from '../../types'
+import type { webTracker, Window } from '../../types'
 import { variableTypeDetection } from './verifyType'
 
 /**

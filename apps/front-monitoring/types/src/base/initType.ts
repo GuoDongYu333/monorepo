@@ -1,4 +1,4 @@
-import { userBehaviorStackType } from './base'
+import type { userBehaviorStackType } from './base'
 
 export interface InitOptions {
   reportUrl: string // 上报的地址
