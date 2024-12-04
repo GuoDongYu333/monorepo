@@ -63,16 +63,18 @@ const HandleEvents = {
     const { oldURL, newURL } = data
     const { relative: from } = parseUrlToObj(oldURL)
     const { relative: to } = parseUrlToObj(newURL)
-    userBehavior.push({
-      type: EVENTTYPES.HASHCHANGE,
-      category: userBehavior.getCategory(EVENTTYPES.HASHCHANGE),
-      data: {
-        from,
-        to,
-      },
-      time: getTimestamp(),
-      status: STATUS_CODE.SUCCESS,
-    })
+    if (oldURL !== newURL) {
+      userBehavior.push({
+        type: EVENTTYPES.HASHCHANGE,
+        category: userBehavior.getCategory(EVENTTYPES.HASHCHANGE),
+        data: {
+          from,
+          to,
+        },
+        time: getTimestamp(),
+        status: STATUS_CODE.SUCCESS,
+      })
+    }
   },
 
   //OK
